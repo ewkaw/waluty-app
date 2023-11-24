@@ -34,10 +34,10 @@ function App() {
     //   })
     // );
     
-    // setCurrencyValues({
-    //   pln: newPln,
-    //   eur: newEur
-    // });
+    setCurrencyValues({
+      pln: newPln,
+      eur: newEur
+    });
   };
 
   return (
