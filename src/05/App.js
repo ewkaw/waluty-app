@@ -1,13 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { apiUsers } from './users/apiUsers';
 import { UserListItem } from './users/UserListItem';
 import { findUserByEmail } from './users/findUserByEmail';
 import { NoUsersText } from './users/NoUsersText';
 
 function App() {
-  const [users, setUsers] = useState(apiUsers);
+  const [users, setUsers] = useState([]);
   const [phrase, setPhrase] = useState();
- 
+  const [error, setError] = useState(null);
+
+  // Wywola sie przy kazdym renderze
+  // console.log('Hello from component!');
+
+  // Wywola sie raz przy odpaleniu komponentu
+  useEffect(() => {
+    fetch('http://localhost:3003/users')
+      .then(res => res.json())
+      .then(setUsers)
+      // to samo co wyzej napisane dluzej
+      // .then(data => {
+      //   console.log(data);
+      //   setUsers(data);
+      // });
+      // Obsluga bledu
+      .catch(err => {
+        setError(err);
+      });
+  },
+    // Odpala funkcje raz, kiedy jest pusta tablica
+    []);
+
   const handleFormSubmit = e => {
     e.preventDefault();
 
@@ -25,12 +47,14 @@ function App() {
   const deleteUser = userId => setUsers(prev => prev.filter(user => user.id !== userId));
 
   const editUser = (userId, email) => setUsers(
-    prev => prev.map(user => user.id === userId ? ({ ...user, email }):  user)
+    prev => prev.map(user => user.id === userId ? ({ ...user, email }) : user)
   );
 
 
   return (
     <div style={{ border: '1px solid blue' }}>
+      {error && <span>{error.message}</span>}
+
       <input
         type="search"
         placeholder="Wyszukaj uzytkownika"
@@ -57,8 +81,8 @@ function App() {
         {users
           .filter(findUserByEmail(phrase))
           .map(user => (
-            <UserListItem 
-              key={user.id} 
+            <UserListItem
+              key={user.id}
               user={user}
               onDelete={deleteUser}
               onEdit={editUser}
