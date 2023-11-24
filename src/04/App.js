@@ -43,6 +43,18 @@ function App() {
     setUsers(prev => prev.filter(user => user.id !== userId));
   };
 
+  const editUser = (userId, email) => setUsers(
+    prev => prev.map(user => user.id === userId ? ({ ...user, email }):  user)
+  );
+  // Mniej skrotowa wersja
+  // const editUser = (userId, email) => setUsers(
+  //   prev => prev.map(user => {
+  //     if (user.id === userId) return { ...user, email };
+
+  //     return user;
+  //   })
+  // );
+
   return (
     <div>
       <input
@@ -70,7 +82,12 @@ function App() {
           // Nie moge tak zrobic, bo jako drugi argument dostane index, a nie fraze
           // .filter(findUserByEmail)
           .map(user => (
-            <UserListItem key={user.id} user={user} onDelete={deleteUser} />
+            <UserListItem 
+              key={user.id} 
+              user={user}
+              onDelete={deleteUser}
+              onEdit={editUser}
+            />
           ))
         }
       </ul>
