@@ -13,7 +13,7 @@ function App() {
     error,
     setUsers,
   } = useUserList(phrase);
-  
+ 
   // To samo co wyzej w dluzszej formie
   // const userList = useUserList();
   // const {
@@ -71,7 +71,6 @@ function App() {
 
       <ul>
         {users
-          .filter(findUserByEmail(phrase))
           .map(user => (
             <UserListItem
               key={user.id}
