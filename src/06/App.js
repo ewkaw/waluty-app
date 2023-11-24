@@ -12,7 +12,15 @@ function App() {
     users,
     error,
     setUsers,
-  } = useUserList();
+  } = useUserList(phrase);
+  
+  // To samo co wyzej w dluzszej formie
+  // const userList = useUserList();
+  // const {
+  //   users,
+  //   error,
+  //   setUsers,
+  // } = userList;
 
   const handleFormSubmit = e => {
     e.preventDefault();
