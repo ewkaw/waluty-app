@@ -11,11 +11,12 @@ function App() {
   // state
 
 
-  const foundUsers = apiUsers.filter(user => {
-    if (!phrase) return true;
+  // Jesli chce najpierw zdefiniowac stala, a pozniej z niej korzystac w JSX
+  // const foundUsers = apiUsers.filter(user => {
+  //   if (!phrase) return true;
 
-    return user.email.toLowerCase().includes(phrase.toLowerCase());
-  });
+  //   return user.email.toLowerCase().includes(phrase.toLowerCase());
+  // });
 
   return (
     <div>
@@ -27,7 +28,7 @@ function App() {
 
       <span>Wyszukujesz: <strong>{phrase}</strong></span>
       <ul>
-        {foundUsers
+        {apiUsers
           // Bardzo czesto mozna sie spotkac z filtrowaniem tuz przed wyswietleniem ( .map() )
           // apiUsers
           // .filter(user => true)
