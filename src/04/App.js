@@ -4,6 +4,11 @@ import { UserListItem } from './users/UserListItem';
 import { findUserByEmail } from './users/findUserByEmail';
 import { NoUsersText } from './users/NoUsersText';
 
+const colorsMap = {
+  'black': '#000',
+  'white': '#fff',
+}
+
 function App() {
   const [users, setUsers] = useState(apiUsers);
   const [phrase, setPhrase] = useState();
@@ -19,7 +24,7 @@ function App() {
 
   //   return user.email.toLowerCase().includes(phrase.toLowerCase());
   // });
-
+const currentColor = 'black';
 
 
   const handleFormSubmit = e => {
@@ -64,6 +69,12 @@ function App() {
   // Potencjalny problem ze wspoldzieleniem styli / interfejsu graficznego miedzy stanem pustym, a stanem kiedy mamy dane
   // if (users.length === 0) return <div style={{ border: '1px solid blue' }}><NoUsersText /></div>
 
+  // Mozna uzywac switch-case
+  // switch(currentColor) {
+  //   case 'black':
+  //     return <div></div>
+  // }
+
   return (
     <div style={{ border: '1px solid blue' }}>
       <input
@@ -71,6 +82,38 @@ function App() {
         placeholder="Wyszukaj uzytkownika"
         onChange={e => setPhrase(e.target.value)}
       />
+
+     {/* Nie polecam ternary operatora */}
+      {
+        phrase 
+        ? 
+          <span>Wyszukujesz: <strong>{phrase}</strong></span>
+        : 
+          <span><strong>Brak filtrow</strong></span>
+      }
+
+      {phrase && (
+        // Fragment (<>) -> JSX oczekuje, ze zwrocimy jeden nadrzedny element
+        <>
+          {phrase.length > 2 && <span>Wyszukujesz: <strong>{phrase}</strong></span>}
+
+          {phrase.length <= 2 && <span>Za malo znakow</span>}
+        </>
+      )}
+
+      {!phrase && <span><strong>Brak filtrow</strong></span>}
+
+      {/*  Unikajmy zagniezdzen ternary operatora  */}
+      {/* {
+        phrase 
+        ? 
+          phrase.length > 2 ? <span>Wyszukujesz: <strong>{phrase}</strong></span> : <span>Za malo znakow</span>
+        : 
+          <span><strong>Brak filtrow</strong></span>
+      } */}
+      
+      {/* Sposob na wyswietlanie typow wyliczeniowych */}
+      {/* {colorsMap[currentColor]} */}
 
       {/* Jezeli nie ma uzytkownikiw, to pokaz komponent <NoUsersText /> */}
       {users.length === 0 && <NoUsersText />}
@@ -83,7 +126,6 @@ function App() {
         <button>Dodaj</button>
       </form>
 
-      <span>Wyszukujesz: <strong>{phrase}</strong></span>
       <ul>
         {users
           // Bardzo czesto mozna sie spotkac z filtrowaniem tuz przed wyswietleniem ( .map() )
