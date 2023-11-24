@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { apiUsers } from './users/apiUsers';
 import { UserListItem } from './users/UserListItem';
 import { findUserByEmail } from './users/findUserByEmail';
+import { NoUsersText } from './users/NoUsersText';
 
 function App() {
   const [users, setUsers] = useState(apiUsers);
@@ -18,6 +19,8 @@ function App() {
 
   //   return user.email.toLowerCase().includes(phrase.toLowerCase());
   // });
+
+
 
   const handleFormSubmit = e => {
     e.preventDefault();
@@ -55,13 +58,24 @@ function App() {
   //   })
   // );
 
+  // Wyswietlanie warunkowe
+  
+  // Wyswietlanie warunkowe
+  // Potencjalny problem ze wspoldzieleniem styli / interfejsu graficznego miedzy stanem pustym, a stanem kiedy mamy dane
+  // if (users.length === 0) return <div style={{ border: '1px solid blue' }}><NoUsersText /></div>
+
   return (
-    <div>
+    <div style={{ border: '1px solid blue' }}>
       <input
         type="search"
         placeholder="Wyszukaj uzytkownika"
         onChange={e => setPhrase(e.target.value)}
       />
+
+      {/* Jezeli nie ma uzytkownikiw, to pokaz komponent <NoUsersText /> */}
+      {users.length === 0 && <NoUsersText />}
+      {/* Trzeba uwazac na takie przypadki, bo kiedy nie bedzie uzytkownikow, to zobaczymy zero */}
+      {/* {users.length && <NoUsersText />} */}
 
       <form onSubmit={handleFormSubmit}>
         <input type="text" name="email" placeholder="Email" />
