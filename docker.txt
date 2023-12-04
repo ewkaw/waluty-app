@@ -1,0 +1,10 @@
+Fajne zrodlo wiedzy: https://docker-curriculum.com/
+
+docker ps <- wylistuj odpalone kontenery
+docker ps -a <- wylistuj wszystkie kontenery, tez zatrzymane
+
+docker build . -t react-app -f ./Dockerfile  <- zbuduj obraz. UWAGA: trzeba byc w katalogu glownym projektu ( tam gdzie package.json ). UWAGA 2: react-app to dowolna nazwa naszego obrazu
+
+docker run -p 3004:80 react-app <- uruchom obraz react-app i zmapuj localhost:3004 na port 80 wewnatrz konetnera ( na nim dziala nginx)
+
+docker stop react-app <- zatrzymaj kontener
