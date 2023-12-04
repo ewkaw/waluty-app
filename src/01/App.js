@@ -6,7 +6,7 @@ function App() {
   const defaultPln = 3;
 
   const [pln, setPln] = useState(defaultPln);
-  const [eur, setEur] = useState(defaultPln / plnToEur);ss
+  const [eur, setEur] = useState(defaultPln / plnToEur);
 
   // Musimy zadbac o modyfikacje 2 zmiennych stanowych
   const updateValues = (newPln, newEur) => {
